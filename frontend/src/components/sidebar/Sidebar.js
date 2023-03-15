@@ -13,10 +13,7 @@ function Sidebar() {
         <header>
           <div class='image-text'>
             <span class='image'>
-              <img
-                src='https://blogger.googleusercontent.com/img/a/AVvXsEgjA6FdqLFps5zaTKQjQJaEThc8nqqk-qq8BTrxjoc1a2DWIJ2wb-eTf1R4hYRwC4UDqdR2kOish2vKcemBjYQEh0waLfZ4wcteJvy0TISrdbPWZm8udx730Ow7nj-oU_-7ZJGQSWWU8iAa_FG3BZ02BK1gpXYzmxj-s42fk4D0WrooBR6bypV9ImrSOg=s800'
-                alt=''
-              />
+              <img src={require("../../assests/logo.png")} alt='' />
             </span>
 
             <div class='text logo-text'>
@@ -34,47 +31,29 @@ function Sidebar() {
 
             <ul class='menu-links'>
               <li class='nav-link'>
-                <a href='#'>
-                  <Link to='/'>
-                    <i class='bx bx-home-alt icon'></i>
+                {/* <a href='#'> */}
+                <Link to='/'>
+                  <i class='fa-sharp fa-solid fa-gauge-high icon'></i>
+                  <span class='text nav-text'>Dashboard</span>
+                </Link>
+                {/* </a> */}
+              </li>
 
-                    <span class='text nav-text'>Dashboard</span>
+              <li class='nav-link'>
+                <a href='#'>
+                  <Link to='/mailer'>
+                    {/* <i class='bx bx-bar-chart-alt-2 icon'></i> */}
+                    <i class='fa-sharp fa-solid fa-envelopes-bulk icon'></i>
+                    <span class='text nav-text'>Mailer</span>
                   </Link>
                 </a>
               </li>
 
               <li class='nav-link'>
                 <a href='#'>
-                  <Link to='/users'>
-                    <i class='bx bx-bar-chart-alt-2 icon'></i>
-                    <span class='text nav-text'>Users</span>
-                  </Link>
-                </a>
-              </li>
-
-              <li class='nav-link'>
-                <a href='#'>
-                  <Link to='/addcourse'>
-                    <i class='bx bx-bell icon'></i>
-                    <span class='text nav-text'>Add Course</span>
-                  </Link>
-                </a>
-              </li>
-
-              <li class='nav-link'>
-                <a href='#'>
-                  <Link to='/courses'>
-                    <i class='bx bx-bell icon'></i>
-                    <span class='text nav-text'>Courses</span>
-                  </Link>
-                </a>
-              </li>
-
-              <li class='nav-link'>
-                <a href='#'>
-                  <Link to='/messages'>
-                    <i class='bx bx-pie-chart-alt icon'></i>
-                    <span class='text nav-text'>Messages</span>
+                  <Link to='/groups'>
+                    <i class='fa-sharp fa-solid fa-user-group icon'></i>
+                    <span class='text nav-text'>Groups</span>
                   </Link>
                 </a>
               </li>
