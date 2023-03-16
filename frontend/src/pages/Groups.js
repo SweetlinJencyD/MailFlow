@@ -9,7 +9,15 @@ function Groups() {
       <button class='add-record-btn' onClick={() => setModalView(true)}>
         Add Group
       </button>
-      <div>{modalView ? <Modal /> : ""}</div>
+      <div>
+        {modalView ? (
+          <div>
+            <Modal />
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }
