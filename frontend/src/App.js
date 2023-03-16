@@ -13,6 +13,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Send from "./pages/Mailer";
 import Navbar from "./components/navbar/Navbar";
 import Mailer from "./pages/Mailer";
+import Groups from "./pages/Groups";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Routes>
                 {/* <Route path='/' element={<Dashboard />} /> */}
                 <Route path='mailer' element={<Mailer />} />
+                <Route path='groups' element={<Groups />} />
               </Routes>
             </div>
           </section>

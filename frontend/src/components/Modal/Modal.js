@@ -1,12 +1,27 @@
 import React, { useState } from "react";
+import Papa from "papaparse";
+import validator from "validator";
 import "./modal.css";
 
 const Modal = () => {
   const [file, setFile] = useState(null);
   const [text, setText] = useState("");
+  const validEmail = [];
 
   const handleFileUpload = (event) => {
     setFile(event.target.files[0]);
+    Papa.parse(event.target.files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        results.data.forEach((mail) => {
+          if (validator.isEmail(mail["Email Address"])) {
+            validEmail.push(mail["Email Address"]);
+          }
+        });
+        console.log(validEmail);
+      },
+    });
   };
 
   const handleTextChange = (event) => {

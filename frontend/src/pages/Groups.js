@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+
+import Modal from "../components/Modal/Modal";
 
 function Groups() {
-  return <div>Groups</div>;
+  const [modalView, setModalView] = useState(false);
+  return (
+    <div>
+      <button class='add-record-btn' onClick={() => setModalView(true)}>
+        Add Group
+      </button>
+      <div>{modalView ? <Modal /> : ""}</div>
+    </div>
+  );
 }
 
 export default Groups;
