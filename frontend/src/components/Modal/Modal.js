@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
 import validator from "validator";
+import axios from "axios";
+import { Circles } from "react-loader-spinner";
 import "./modal.css";
 
-const Modal = () => {
+const Modal = ({ handleModal }) => {
   const [file, setFile] = useState(null);
-  const [text, setText] = useState("");
+  const [name, setName] = useState("");
+  const [validEmails, setvalidEmails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const validEmail = [];
 
   const handleFileUpload = (event) => {
@@ -19,19 +24,25 @@ const Modal = () => {
             validEmail.push(mail["Email Address"]);
           }
         });
-        console.log(validEmail);
       },
     });
-  };
-
-  const handleTextChange = (event) => {
-    setText(event.target.value);
+    setvalidEmails(validEmail);
   };
 
   const handleSubmit = () => {
-    // do something with the file and text
-    setFile(null);
-    setText("");
+    setIsLoading(true);
+    axios
+      .post(`http://localhost:3100/api/v1/user/addgroup`, {
+        name: name,
+        emails: validEmails,
+      })
+      .then((res) => {
+        console.log("successfully added.");
+        setFile(null);
+        setName("");
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -54,8 +65,12 @@ const Modal = () => {
                 type='text'
                 id='name'
                 placeholder='Enter your text here...'
+                onChange={(e) => setName(e.target.value)}
               />
-              <label className='labels-name'>
+              <label
+                className='labels-name'
+                style={{ color: "#7d7d7d", fontSize: "13px" }}
+              >
                 This will be your new group name, Ex Newsletter.
               </label>
             </div>
@@ -71,7 +86,10 @@ const Modal = () => {
             <label htmlFor='file-upload' className='file-upload-label'>
               {file ? file.name : "Choose file"}
             </label>
-            <label className='labels-name'>
+            <label
+              className='labels-name'
+              style={{ color: "#7d7d7d", fontSize: "13px" }}
+            >
               Select the CSV file that includes email addresses.
             </label>
             <input
@@ -91,16 +109,34 @@ const Modal = () => {
               onChange={handleTextChange}
             />
           </div> */}
-          <button type='button' className='cancel-button'>
+          <button
+            type='button'
+            className='cancel-button'
+            onClick={() => handleModal(false)}
+          >
             Cancel
           </button>
           <button
             type='button'
             className='submit-button'
             onClick={handleSubmit}
-            disabled={!file && !text}
+            disabled={!file && !name && isLoading}
           >
-            Submit
+            {isLoading ? (
+              <div className='submit-loading'>
+                <Circles
+                  height='14'
+                  width='14'
+                  color='#fff'
+                  ariaLabel='circles-loading'
+                  wrapperStyle={{}}
+                  wrapperClass=''
+                  visible={true}
+                />
+              </div>
+            ) : (
+              "Submit"
+            )}
           </button>
         </form>
       </div>

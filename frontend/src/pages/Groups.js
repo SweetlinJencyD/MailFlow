@@ -4,6 +4,11 @@ import Modal from "../components/Modal/Modal";
 
 function Groups() {
   const [modalView, setModalView] = useState(false);
+
+  const handleModal = (res) => {
+    setModalView(res);
+  };
+
   return (
     <div>
       <button class='add-record-btn' onClick={() => setModalView(true)}>
@@ -12,7 +17,7 @@ function Groups() {
       <div>
         {modalView ? (
           <div>
-            <Modal />
+            <Modal handleModal={handleModal} />
           </div>
         ) : (
           ""

@@ -424,3 +424,85 @@ body.dark .home .text {
     margin-top: 10px;
   }
 }
+
+.email-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.email-card__title {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+}
+
+.email-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+
+.btn {
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.btn-secondary {
+  background-color: #f2f2f2;
+  border: none;
+  color: #333;
+}
+
+@media screen and (max-width: 600px) {
+  .email-card {
+    padding: 20px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-control {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

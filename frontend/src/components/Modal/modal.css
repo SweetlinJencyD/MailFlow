@@ -53,13 +53,19 @@
 }
 
 .submit-button {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
+  width: 80px;
+  height: 37px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   margin-left: 20px;
   cursor: pointer;
+}
+
+.submit-loading {
+  padding: 10px 30px;
 }
 
 .cancel-button {
