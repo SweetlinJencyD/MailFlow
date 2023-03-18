@@ -2,9 +2,6 @@ const sgMail = require("@sendgrid/mail");
 
 const sendMail = (mails, subject, message) => {
   sgMail.setApiKey(process.env.Mail_Secret);
-  console.log("mails", mails);
-  console.log("subject", subject);
-  console.log("msg", message);
   const msg = {
     to: mails,
     from: "vishnusatheeshdev@gmail.com",
@@ -13,7 +10,7 @@ const sendMail = (mails, subject, message) => {
   };
   sgMail;
   sgMail
-    .send(msg, true)
+    .send(msg)
     .then(() => {
       console.log("Email sent");
     })
