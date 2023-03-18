@@ -37,4 +37,15 @@ const sendMails = async (req, res) => {
   res.status(200).send({ success: true, message: "successfully send" });
 };
 
-module.exports = { addGroup, sendMails, viewGroups };
+const deleteGroup = async (req, res) => {
+  const group = await Group.findByIdAndDelete(req.params.id);
+  if (!group)
+    return res
+      .status(404)
+      .send({ success: false, message: "Failed to delete the group" });
+  res
+    .status(200)
+    .send({ success: true, message: "Group deleted successfully" });
+};
+
+module.exports = { addGroup, sendMails, viewGroups, deleteGroup };

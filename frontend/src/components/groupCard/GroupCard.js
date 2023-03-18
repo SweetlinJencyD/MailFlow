@@ -1,7 +1,7 @@
 import React from "react";
 import "./groupcard.css";
 
-function GroupCard({ name, emails }) {
+function GroupCard({ name, emails, handleDelete, id }) {
   return (
     <div>
       <div class='card'>
@@ -13,7 +13,9 @@ function GroupCard({ name, emails }) {
           <p class='card__subtitle'>Number of Emails</p>
           <p class='card__number'>{emails}</p>
         </div>
-        <button class='card__delete-btn'>Delete</button>
+        <button class='card__delete-btn' onClick={() => handleDelete(id)}>
+          Delete
+        </button>
       </div>
     </div>
   );

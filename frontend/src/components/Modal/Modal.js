@@ -5,7 +5,7 @@ import axios from "axios";
 import { Circles } from "react-loader-spinner";
 import "./modal.css";
 
-const Modal = ({ handleModal }) => {
+const GroupModal = ({ handleModal }) => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [validEmails, setvalidEmails] = useState([]);
@@ -144,4 +144,4 @@ const Modal = ({ handleModal }) => {
   );
 };
 
-export default Modal;
+export default GroupModal;
