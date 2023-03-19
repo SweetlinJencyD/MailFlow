@@ -9,29 +9,24 @@ import {
 import "./App.css";
 import "./styles/dashboard.css";
 
-import Sidebar from "./components/sidebar/Sidebar";
+import Home from "./pages/Home";
 import Send from "./pages/Mailer";
-import Navbar from "./components/navbar/Navbar";
 import Mailer from "./pages/Mailer";
 import Groups from "./pages/Groups";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <div className='container'>
-          <Sidebar />
-          <Navbar />
-          <section className='home'>
-            <div style={{ marginTop: "100px" }}>
-              <Routes>
-                {/* <Route path='/' element={<Dashboard />} /> */}
-                <Route path='mailer' element={<Mailer />} />
-                <Route path='groups' element={<Groups />} />
-              </Routes>
-            </div>
-          </section>
-        </div>
+        <Routes>
+          <Route path='login' element={<LoginPage />} />
+          <Route path='register' element={<RegisterPage />} />
+          <Route path='/' element={<Home />} />
+          <Route path='mailer' element={<Mailer />} />
+          <Route path='groups' element={<Groups />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "../styles/dashboard.css";
 import GroupModal from "../components/Modal/Modal";
 import GroupCard from "../components/groupCard/GroupCard";
+import Sidebar from "../components/sidebar/Sidebar";
+import Navbar from "../components/navbar/Navbar";
 
 const customStyles = {
   content: {
@@ -43,6 +47,19 @@ function Groups() {
         console.log("successfully deleted");
         setModalClose(true);
         setIsOpen(false);
+        toast.success("Successfully deleted group", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        // setTimeout(() => {
+        //   window.location.reload(false);
+        // }, 1300);
       })
       .catch((err) => console.log(err));
   };
@@ -54,7 +71,7 @@ function Groups() {
         setGroups(res.data.groups);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [modalView, modalIsOpen]);
 
   const handleDelete = (id) => {
     setIsOpen(true);
@@ -63,49 +80,75 @@ function Groups() {
 
   return (
     <div>
-      <button class='add-record-btn' onClick={() => setModalView(true)}>
-        Add Group
-      </button>
-      <div class='group-grid-container'>
-        {groups.map((group) => (
-          <GroupCard
-            name={group.name}
-            emails={group.emails.length}
-            handleDelete={handleDelete}
-            id={group._id}
-          />
-        ))}
-      </div>
-      <div>
-        {modalView ? (
-          <div>
-            <GroupModal handleModal={handleModal} />
+      <div className='container'>
+        <Sidebar />
+        <Navbar />
+        <section className='home'>
+          <div style={{ marginTop: "100px" }}>
+            <button class='add-record-btn' onClick={() => setModalView(true)}>
+              Add Group
+            </button>
+            <div class='group-grid-container'>
+              {groups.map((group) => (
+                <GroupCard
+                  name={group.name}
+                  emails={group.emails.length}
+                  handleDelete={handleDelete}
+                  id={group._id}
+                />
+              ))}
+            </div>
+            <div>
+              {modalView ? (
+                <div>
+                  <GroupModal handleModal={handleModal} />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={modalClose}
+              style={customStyles}
+              contentLabel='Example Modal'
+              className='modal'
+              overlayClassName='modal-overlay'
+            >
+              <h2 className='modal-title'>Confirm Delete Group</h2>
+              <p className='modal-text'>
+                Are you sure you want to delete this group?
+              </p>
+              <div className='modal-buttons'>
+                <button
+                  className='modal-button cancel'
+                  onClick={onRequestClose}
+                >
+                  Cancel
+                </button>
+                <button
+                  className='modal-button delete'
+                  onClick={onHandleConfirm}
+                >
+                  Delete
+                </button>
+              </div>
+            </Modal>
+            <ToastContainer
+              position='bottom-right'
+              autoClose={1000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme='light'
+            />
           </div>
-        ) : (
-          ""
-        )}
+        </section>
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={modalClose}
-        style={customStyles}
-        contentLabel='Example Modal'
-        className='modal'
-        overlayClassName='modal-overlay'
-      >
-        <h2 className='modal-title'>Confirm Delete Group</h2>
-        <p className='modal-text'>
-          Are you sure you want to delete this group?
-        </p>
-        <div className='modal-buttons'>
-          <button className='modal-button cancel' onClick={onRequestClose}>
-            Cancel
-          </button>
-          <button className='modal-button delete' onClick={onHandleConfirm}>
-            Delete
-          </button>
-        </div>
-      </Modal>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import Papa from "papaparse";
 import validator from "validator";
 import axios from "axios";
 import { Circles } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./modal.css";
 
 const GroupModal = ({ handleModal }) => {
@@ -37,10 +39,20 @@ const GroupModal = ({ handleModal }) => {
         emails: validEmails,
       })
       .then((res) => {
-        console.log("successfully added.");
         setFile(null);
         setName("");
         setIsLoading(false);
+        handleModal(false);
+        toast.success("Successfully added group", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -66,6 +78,7 @@ const GroupModal = ({ handleModal }) => {
                 id='name'
                 placeholder='Enter your text here...'
                 onChange={(e) => setName(e.target.value)}
+                className='group-name'
               />
               <label
                 className='labels-name'
@@ -140,6 +153,18 @@ const GroupModal = ({ handleModal }) => {
           </button>
         </form>
       </div>
+      <ToastContainer
+        position='bottom-right'
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </div>
   );
 };
