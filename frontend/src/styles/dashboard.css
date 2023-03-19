@@ -586,3 +586,7 @@ body.dark .home .text {
   align-items: center;
   justify-content: center;
 }
+
+.link {
+  text-decoration: none;
+}

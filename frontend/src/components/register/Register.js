@@ -1,7 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 import "../login/login.css";
 
 function Register() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSubmission = (values) => {
+    const { firstName, lastName, email, password } = values;
+    axios
+      .post("http://localhost:3100/api/v1/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const SignUpSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(5, "Min 5 character long")
+      .max(15, "should not exceed 15 characters")
+      .required("Required"),
+    lastName: Yup.string()
+      .min(5, "Min 5 character long")
+      .max(15, "should not exceed 15 characters")
+      .required("Required"),
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string()
+      .min(8, "Password is too short - should be 8 chars minimum.")
+      .required("Required"),
+    confirmPassword: Yup.string()
+      .label("confirm password")
+      .required()
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  });
+
   return (
     <div>
       <div>
@@ -21,122 +66,200 @@ function Register() {
                   Welcome, Please Sign up your account.
                 </p>
               </header>
-              <form class='sign-up__form form'>
-                <div class='form__row form__row--two'>
-                  <div class='input form__inline-input'>
-                    <div class='input__container'>
-                      <input
-                        class='input__field'
-                        id='first-name'
-                        placeholder='First Name'
-                        required=''
-                        type='text'
-                      />
-                      <label class='input__label' for='first-name'>
-                        First Name
-                      </label>
-                    </div>
-                  </div>
-                  <div class='input form__inline-input'>
-                    <div class='input__container'>
-                      <input
-                        class='input__field'
-                        id='last-name'
-                        placeholder='Last Name'
-                        required=''
-                        type='text'
-                      />
-                      <label class='input__label' for='last-name'>
-                        Last Name
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class='form__row'>
-                  <div class='input'>
-                    <div class='input__container'>
-                      <input
-                        class='input__field'
-                        id='email'
-                        placeholder='Email'
-                        required
-                        type='email'
-                      />
-                      <label class='input__label' for='email'>
-                        Email
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class='form__row'>
-                  <div class='input'>
-                    <div class='input__container'>
-                      <input
-                        class='input__field'
-                        id='password'
-                        placeholder='Password'
-                        required
-                        type='password'
-                      />
-                      <label class='input__label' for='password'>
-                        Password
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class='form__row'>
-                  <div class='input'>
-                    <div class='input__container'>
-                      <input
-                        class='input__field'
-                        id='confirm-password'
-                        placeholder='Confirm password'
-                        required=''
-                        type='password'
-                      />
-                      <label class='input__label' for='confirm-password'>
-                        Confirm password
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class='form__row'>
-                  <div class='input-checkbox'>
-                    <div class='input-checkbox__container'>
-                      <input
-                        checked=''
-                        class='input-checkbox__field'
-                        id='agree'
-                        required=''
-                        tabindex='0'
-                        type='checkbox'
-                      />
-                      <span class='input-checkbox__square'></span>
-                      <label class='input-checkbox__label' for='agree'>
-                        I agree with terms and conditions
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class='form__row'>
-                  <div class='component component--primary form__button'>
-                    <button
-                      class='btn btn--regular'
-                      disabled=''
-                      id='sign-up-button'
-                      tabindex='0'
-                    >
-                      Login
-                    </button>
-                  </div>
-                </div>
-                <div class='form__row sign-up__sign'>
-                  Don't have an account? &nbsp;
-                  <a class='link' href='#'>
-                    Sign up.
-                  </a>
-                </div>
-              </form>
+              <div class='sign-up__form form'>
+                <Formik
+                  initialValues={{
+                    firstName: "",
+                    lastNameame: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                  }}
+                  validationSchema={SignUpSchema}
+                  onSubmit={(values) => {
+                    handleSubmission(values);
+                  }}
+                >
+                  {({ errors, touched }) => (
+                    <Form method='post'>
+                      <div class='form__row form__row--two'>
+                        <div class='input form__inline-input'>
+                          <div class='input__container'>
+                            <Field
+                              name='firstName'
+                              className='input__field'
+                              id='first-name'
+                              placeholder='First Name'
+                            />
+                            <label class='input__label' for='first-name'>
+                              First Name
+                            </label>
+                            {errors.firstName && touched.firstName ? (
+                              <span className='error-sign'>
+                                {errors.firstName}
+                              </span>
+                            ) : null}
+                            {/* <input
+                              class='input__field'
+                              id='first-name'
+                              placeholder='First Name'
+                              required
+                              type='text'
+                              onChange={(e) => setFirstName(e.target.value)}
+                            /> */}
+                          </div>
+                        </div>
+                        <div class='input form__inline-input'>
+                          <div class='input__container'>
+                            <Field
+                              name='lastName'
+                              className='input__field'
+                              id='last-name'
+                              placeholder='Last Name'
+                            />
+                            <label class='input__label' for='last-name'>
+                              Last Name
+                            </label>
+                            {errors.lastName && touched.lastName ? (
+                              <span className='error-sign'>
+                                {errors.lastName}
+                              </span>
+                            ) : null}
+                            {/* <input
+                              class='input__field'
+                              id='last-name'
+                              placeholder='Last Name'
+                              required
+                              type='text'
+                              onChange={(e) => setLastName(e.target.value)}
+                            /> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div class='form__row'>
+                        <div class='input'>
+                          <div class='input__container'>
+                            <Field
+                              name='email'
+                              className='input__field'
+                              id='email'
+                              placeholder='Email'
+                            />
+                            <label class='input__label' for='email'>
+                              Email
+                            </label>
+                            {errors.email && touched.email ? (
+                              <span className='error-sign'>{errors.email}</span>
+                            ) : null}
+                            {/* <input
+                              class='input__field'
+                              id='email'
+                              placeholder='Email'
+                              required
+                              type='email'
+                              onChange={(e) => setEmail(e.target.value)}
+                            /> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div class='form__row'>
+                        <div class='input'>
+                          <div class='input__container'>
+                            <Field
+                              name='password'
+                              className='input__field'
+                              id='password'
+                              placeholder='Password'
+                              type='password'
+                            />
+                            <label class='input__label' for='password'>
+                              Password
+                            </label>
+                            {errors.password && touched.password ? (
+                              <span className='error-sign'>
+                                {errors.password}
+                              </span>
+                            ) : null}
+                            {/* <input
+                              class='input__field'
+                              id='password'
+                              placeholder='Password'
+                              required
+                              type='password'
+                              onChange={(e) => setPassword(e.target.value)}
+                            /> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div class='form__row'>
+                        <div class='input'>
+                          <div class='input__container'>
+                            <Field
+                              name='confirmPassword'
+                              className='input__field'
+                              id='confirm-password'
+                              placeholder='Confirm Password'
+                            />
+                            <label class='input__label' for='confirm-password'>
+                              Confirm password
+                            </label>
+                            {errors.confirmPassword &&
+                            touched.confirmPassword ? (
+                              <span className='error-sign'>
+                                {errors.confirmPassword}
+                              </span>
+                            ) : null}
+                            {/* <input
+                              class='input__field'
+                              id='confirm-password'
+                              placeholder='Confirm password'
+                              required=''
+                              type='password'
+                            /> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div class='form__row'>
+                        <div class='input-checkbox'>
+                          <div class='input-checkbox__container'>
+                            <input
+                              checked=''
+                              class='input-checkbox__field'
+                              id='agree'
+                              required=''
+                              tabindex='0'
+                              type='checkbox'
+                            />
+                            <span class='input-checkbox__square'></span>
+                            <label class='input-checkbox__label' for='agree'>
+                              I agree with terms and conditions
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class='form__row'>
+                        <div class='component component--primary form__button'>
+                          <button
+                            class='btn btn--regular'
+                            disabled=''
+                            id='sign-up-button'
+                            tabindex='0'
+                            type='submit'
+                          >
+                            Sign up
+                          </button>
+                        </div>
+                      </div>
+                      <div class='form__row sign-up__sign'>
+                        Already have an account? &nbsp;
+                        <Link to='/login' className='link'>
+                          Login.
+                        </Link>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
             </div>
           </div>
         </main>

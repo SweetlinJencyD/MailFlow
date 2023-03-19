@@ -1,15 +1,3 @@
-/* *,
-*::before,
-*::after {
-  box-sizing: border-box;
-} */
-
-/* body {
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
-  line-height: 1.43;
-} */
-
 h1 {
   font-size: 2.5em;
   font-weight: bold;
@@ -322,4 +310,9 @@ input:-webkit-autofill {
 }
 .sign-up__terms {
   margin-top: 80px;
+}
+
+.error-sign {
+  color: red;
+  margin-top: 4px;
 }

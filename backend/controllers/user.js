@@ -1,4 +1,5 @@
 const Group = require("../Models/Group");
+const User = require("../Models/User");
 const { sendMail } = require("../services/mail");
 
 const addGroup = async (req, res) => {
@@ -48,4 +49,24 @@ const deleteGroup = async (req, res) => {
     .send({ success: true, message: "Group deleted successfully" });
 };
 
-module.exports = { addGroup, sendMails, viewGroups, deleteGroup };
+const register = async (req, res) => {
+  console.log(req.body);
+  const user = new User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+  });
+  if (!user)
+    return res
+      .status(400)
+      .send({ success: false, message: "Registration failed!" });
+  const result = await user.save();
+  if (!result)
+    return res
+      .status(500)
+      .send({ success: false, message: "Registration failed!" });
+  res.status(200).send({ success: true, message: "Registration successfull" });
+};
+
+module.exports = { addGroup, sendMails, viewGroups, deleteGroup, register };
