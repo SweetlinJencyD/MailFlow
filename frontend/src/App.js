@@ -10,18 +10,18 @@ import Groups from "./pages/Groups";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./auth/PrivateRoute";
+import Logout from "./auth/Logout";
 
 function App() {
-  const isAuthenticated = true;
-
   return (
     <div className='App'>
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path='/home' element={<Home />} />
-            <Route path='mailer' element={<Mailer />} />
-            <Route path='groups' element={<Groups />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/mailer' element={<Mailer />} />
+            <Route path='/groups' element={<Groups />} />
+            <Route path='/logout' element={<Logout />} />
           </Route>
           <Route path='login' element={<LoginPage />} />
           <Route path='register' element={<RegisterPage />} />

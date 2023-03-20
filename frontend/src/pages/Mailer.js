@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { getToken } from "../auth/auth";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/dashboard.css";
 
@@ -14,8 +15,12 @@ function Send() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    const token = getToken();
+    const config = {
+      headers: { Authorization: token },
+    };
     axios
-      .get("http://localhost:3100/api/v1/user/viewgroups")
+      .get("http://localhost:3100/api/v1/user/viewgroups", config)
       .then((res) => {
         console.log(res.data.groups);
         setGroups(res.data.groups);
@@ -24,12 +29,20 @@ function Send() {
   }, []);
 
   const handleSubmit = () => {
+    const token = getToken();
+    const config = {
+      headers: { Authorization: token },
+    };
     axios
-      .post("http://localhost:3100/api/v1/user/sendmail", {
-        group,
-        subject,
-        message,
-      })
+      .post(
+        "http://localhost:3100/api/v1/user/sendmail",
+        {
+          group,
+          subject,
+          message,
+        },
+        config
+      )
       .then((res) => {
         toast.success("Successfully send mails", {
           position: "bottom-right",

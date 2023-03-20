@@ -1,18 +1,21 @@
 const mongoose = require("mongoose");
 
-const groupSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const groupSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    emails: {
+      type: Array,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-  emails: {
-    type: Array,
-  },
-  //   userId: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "User",
-  //   },
-});
+  { timestamp: true }
+);
 
 const Group = mongoose.model("Group", groupSchema);
 

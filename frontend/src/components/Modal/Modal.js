@@ -4,6 +4,7 @@ import validator from "validator";
 import axios from "axios";
 import { Circles } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
+import { getToken } from "../../auth/auth";
 import "react-toastify/dist/ReactToastify.css";
 import "./modal.css";
 
@@ -32,12 +33,20 @@ const GroupModal = ({ handleModal }) => {
   };
 
   const handleSubmit = () => {
+    const token = getToken();
+    const config = {
+      headers: { Authorization: token },
+    };
     setIsLoading(true);
     axios
-      .post(`http://localhost:3100/api/v1/user/addgroup`, {
-        name: name,
-        emails: validEmails,
-      })
+      .post(
+        `http://localhost:3100/api/v1/user/addgroup`,
+        {
+          name: name,
+          emails: validEmails,
+        },
+        config
+      )
       .then((res) => {
         setFile(null);
         setName("");

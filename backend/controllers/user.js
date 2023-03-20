@@ -1,5 +1,6 @@
 const Group = require("../Models/Group");
 const User = require("../Models/User");
+const SendBox = require("../Models/SendBox");
 const bcrypt = require("bcrypt");
 const { sendMail } = require("../services/mail");
 const generateToken = require("../utils/generateToken");
@@ -8,6 +9,7 @@ const addGroup = async (req, res) => {
   const group = new Group({
     name: req.body.name,
     emails: req.body.emails,
+    userId: req.user._id,
   });
   if (!group)
     return res
@@ -24,7 +26,7 @@ const addGroup = async (req, res) => {
 };
 
 const viewGroups = async (req, res) => {
-  const groups = await Group.find();
+  const groups = await Group.find({ userId: req.user._id });
   if (!groups)
     return res.status(500).send({ success: false, message: "No groups found" });
   res
@@ -37,6 +39,16 @@ const sendMails = async (req, res) => {
   if (!group)
     return res.status(404).send({ success: false, message: "Group not found" });
   const send = await sendMail(group.emails, req.body.subject, req.body.message);
+  const sendBox = new SendBox({
+    userId: req.user._id,
+    subject: req.body.subject,
+    groupId: req.body.group,
+  });
+  const result = await sendBox.save();
+  if (!result)
+    return res
+      .status(500)
+      .send({ success: false, message: "Failed to add send record" });
   res.status(200).send({ success: true, message: "successfully send" });
 };
 

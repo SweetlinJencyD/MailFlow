@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
+import { getToken } from "../auth/auth";
+
 import "react-toastify/dist/ReactToastify.css";
 
 import "../styles/dashboard.css";
@@ -65,8 +67,12 @@ function Groups() {
   };
 
   useEffect(() => {
+    const token = getToken();
+    const config = {
+      headers: { Authorization: token },
+    };
     axios
-      .get("http://localhost:3100/api/v1/user/viewgroups")
+      .get("http://localhost:3100/api/v1/user/viewgroups", config)
       .then((res) => {
         setGroups(res.data.groups);
       })

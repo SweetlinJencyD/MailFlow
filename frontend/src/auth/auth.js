@@ -42,3 +42,22 @@ const saveToken = (token) => {
   const data = `Bearer ${token}`;
   window.localStorage.setItem("MailFlow", data);
 };
+
+export const getToken = () => {
+  return window.localStorage.getItem("MailFlow");
+};
+
+export const signout = () => {
+  window.localStorage.removeItem("MailFlow");
+};
+
+export const isAuthenticated = () => {
+  if (typeof window == "undefined") {
+    return false;
+  }
+  if (localStorage.getItem("MailFlow")) {
+    return true;
+  } else {
+    return false;
+  }
+};

@@ -53,6 +53,15 @@ function Sidebar() {
                 </a>
               </li>
 
+              <li className='nav-link'>
+                <a href='#'>
+                  <Link to='/sendbox'>
+                    <i class='fa-solid fa-inbox icon'></i>
+                    <span className='text nav-text'>Send Box</span>
+                  </Link>
+                </a>
+              </li>
+
               {/* <li className='nav-link'>
                 <a href='#'>
                   <i className='bx bx-wallet icon'></i>

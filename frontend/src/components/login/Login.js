@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { signin, saveToken } from "../../auth/auth";
 
@@ -10,11 +10,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const [incorrect, setIncorrect] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     signin(email, password).then((res) => {
-      console.log(res);
       if (res.valid === true && res.status === 200) {
         setIncorrect(false);
+        navigate("/");
       }
       if (res.valid === false && res.status === 400) {
         setIncorrect(true);

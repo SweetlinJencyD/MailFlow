@@ -590,3 +590,9 @@ body.dark .home .text {
 .link {
   text-decoration: none;
 }
+
+.overview_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
