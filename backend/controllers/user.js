@@ -1,6 +1,8 @@
 const Group = require("../Models/Group");
 const User = require("../Models/User");
+const bcrypt = require("bcrypt");
 const { sendMail } = require("../services/mail");
+const generateToken = require("../utils/generateToken");
 
 const addGroup = async (req, res) => {
   const group = new Group({
@@ -69,4 +71,29 @@ const register = async (req, res) => {
   res.status(200).send({ success: true, message: "Registration successfull" });
 };
 
-module.exports = { addGroup, sendMails, viewGroups, deleteGroup, register };
+const login = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user)
+    return res
+      .status(400)
+      .send({ success: false, message: "Incorrect password or email" });
+  if (!bcrypt.compareSync(req.body.password, user.password))
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid username or password" });
+  const token = generateToken(user.email);
+  res.status(200).send({
+    success: true,
+    message: "Successfully loggedIn",
+    token,
+  });
+};
+
+module.exports = {
+  addGroup,
+  sendMails,
+  viewGroups,
+  deleteGroup,
+  register,
+  login,
+};

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { signup } from "../../auth/auth";
 import "../login/login.css";
 
 function Register() {
@@ -11,14 +12,7 @@ function Register() {
   const navigate = useNavigate();
 
   const handleSubmission = (values) => {
-    const { firstName, lastName, email, password } = values;
-    axios
-      .post("http://localhost:3100/api/v1/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-      })
+    signup(values)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -99,14 +93,6 @@ function Register() {
                                 {errors.firstName}
                               </span>
                             ) : null}
-                            {/* <input
-                              class='input__field'
-                              id='first-name'
-                              placeholder='First Name'
-                              required
-                              type='text'
-                              onChange={(e) => setFirstName(e.target.value)}
-                            /> */}
                           </div>
                         </div>
                         <div class='input form__inline-input'>
@@ -125,14 +111,6 @@ function Register() {
                                 {errors.lastName}
                               </span>
                             ) : null}
-                            {/* <input
-                              class='input__field'
-                              id='last-name'
-                              placeholder='Last Name'
-                              required
-                              type='text'
-                              onChange={(e) => setLastName(e.target.value)}
-                            /> */}
                           </div>
                         </div>
                       </div>
@@ -151,14 +129,6 @@ function Register() {
                             {errors.email && touched.email ? (
                               <span className='error-sign'>{errors.email}</span>
                             ) : null}
-                            {/* <input
-                              class='input__field'
-                              id='email'
-                              placeholder='Email'
-                              required
-                              type='email'
-                              onChange={(e) => setEmail(e.target.value)}
-                            /> */}
                           </div>
                         </div>
                       </div>
@@ -180,14 +150,6 @@ function Register() {
                                 {errors.password}
                               </span>
                             ) : null}
-                            {/* <input
-                              class='input__field'
-                              id='password'
-                              placeholder='Password'
-                              required
-                              type='password'
-                              onChange={(e) => setPassword(e.target.value)}
-                            /> */}
                           </div>
                         </div>
                       </div>
@@ -209,13 +171,6 @@ function Register() {
                                 {errors.confirmPassword}
                               </span>
                             ) : null}
-                            {/* <input
-                              class='input__field'
-                              id='confirm-password'
-                              placeholder='Confirm password'
-                              required=''
-                              type='password'
-                            /> */}
                           </div>
                         </div>
                       </div>

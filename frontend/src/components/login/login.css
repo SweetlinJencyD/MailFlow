@@ -316,3 +316,7 @@ input:-webkit-autofill {
   color: red;
   margin-top: 4px;
 }
+
+.err {
+  color: red;
+}

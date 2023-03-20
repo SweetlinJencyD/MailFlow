@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { signin, saveToken } from "../../auth/auth";
 
 import "./login.css";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [incorrect, setIncorrect] = useState(false);
+
+  const handleSubmit = () => {
+    signin(email, password).then((res) => {
+      console.log(res);
+      if (res.valid === true && res.status === 200) {
+        setIncorrect(false);
+      }
+      if (res.valid === false && res.status === 400) {
+        setIncorrect(true);
+      }
+    });
+  };
+
   return (
     <div>
       <main class='sign-up'>
@@ -20,7 +38,7 @@ function Login() {
               <h1 class='sign-up__title'>Login</h1>
               <p class='sign-up__descr'>Welcome, Please login your account.</p>
             </header>
-            <form class='sign-up__form form'>
+            <div class='sign-up__form form'>
               <div class='form__row'>
                 <div class='input'>
                   <div class='input__container'>
@@ -30,6 +48,7 @@ function Login() {
                       placeholder='Email'
                       required
                       type='email'
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <label class='input__label' for='email'>
                       Email
@@ -46,12 +65,18 @@ function Login() {
                       placeholder='Password'
                       required
                       type='password'
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <label class='input__label' for='password'>
                       Password
                     </label>
                   </div>
                 </div>
+                {incorrect ? (
+                  <span className='err'>Invalid Username or password</span>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div class='form__row'>
@@ -61,6 +86,7 @@ function Login() {
                     disabled=''
                     id='sign-up-button'
                     tabindex='0'
+                    onClick={() => handleSubmit()}
                   >
                     Login
                   </button>
@@ -72,7 +98,7 @@ function Login() {
                   Sign up.
                 </Link>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </main>
