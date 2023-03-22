@@ -55,7 +55,7 @@ function Sidebar() {
 
               <li className='nav-link'>
                 <a href='#'>
-                  <Link to='/sendbox'>
+                  <Link to='/sentdetails'>
                     <i class='fa-solid fa-inbox icon'></i>
                     <span className='text nav-text'>Send Box</span>
                   </Link>

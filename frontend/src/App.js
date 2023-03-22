@@ -10,6 +10,8 @@ import Groups from "./pages/Groups";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./auth/PrivateRoute";
+import SentDetails from "./pages/SentDetails";
+import NewTemplate from "./pages/NewTemp";
 import Logout from "./auth/Logout";
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/mailer' element={<Mailer />} />
             <Route path='/groups' element={<Groups />} />
+            <Route path='/sentdetails' element={<SentDetails />} />
+            <Route path='/newtemplate' element={<NewTemplate />} />
             <Route path='/logout' element={<Logout />} />
           </Route>
           <Route path='login' element={<LoginPage />} />

@@ -1,6 +1,6 @@
 const Group = require("../Models/Group");
 const User = require("../Models/User");
-const SendBox = require("../Models/SendBox");
+const Sent = require("../Models/Sent");
 const bcrypt = require("bcrypt");
 const { sendMail } = require("../services/mail");
 const generateToken = require("../utils/generateToken");
@@ -39,7 +39,7 @@ const sendMails = async (req, res) => {
   if (!group)
     return res.status(404).send({ success: false, message: "Group not found" });
   const send = await sendMail(group.emails, req.body.subject, req.body.message);
-  const sendBox = new SendBox({
+  const sendBox = new Sent({
     userId: req.user._id,
     subject: req.body.subject,
     groupId: req.body.group,
@@ -101,6 +101,17 @@ const login = async (req, res) => {
   });
 };
 
+const sentDetails = async (req, res) => {
+  const mails = await Sent.find({ userId: req.user._id }).populate({
+    path: "groupId",
+    select: "name",
+  });
+
+  if (!mails)
+    return res.status(404).send({ success: false, message: "Mails not found" });
+  res.send({ success: true, message: "Successfully fetched the data", mails });
+};
+
 module.exports = {
   addGroup,
   sendMails,
@@ -108,4 +119,5 @@ module.exports = {
   deleteGroup,
   register,
   login,
+  sentDetails,
 };

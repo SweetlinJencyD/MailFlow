@@ -14,7 +14,7 @@ const groupSchema = mongoose.Schema(
       ref: "User",
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const Group = mongoose.model("Group", groupSchema);

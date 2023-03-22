@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const sendBoxSchema = mongoose.Schema(
+const sentSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,10 +13,13 @@ const sendBoxSchema = mongoose.Schema(
     subject: {
       type: String,
     },
+    message: {
+      type: String,
+    },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
-const SendBox = mongoose.model("SendBox", sendBoxSchema);
+const Sent = mongoose.model("Sent", sentSchema);
 
-module.exports = SendBox;
+module.exports = Sent;
