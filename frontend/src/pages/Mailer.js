@@ -114,6 +114,7 @@ function Send() {
                       type='button'
                       className='btn btn-primary'
                       onClick={handleSubmit}
+                      disabled={subject !== "" && group !== ""}
                     >
                       Send <i className='fa-sharp fa-solid fa-paper-plane' />
                     </button>

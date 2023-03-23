@@ -13,6 +13,7 @@ const GroupModal = ({ handleModal }) => {
   const [name, setName] = useState("");
   const [validEmails, setvalidEmails] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [totalMails, setTotalMails] = useState("");
 
   const validEmail = [];
 
@@ -22,6 +23,7 @@ const GroupModal = ({ handleModal }) => {
       header: true,
       skipEmptyLines: true,
       complete: function (results) {
+        setTotalMails(results.data.length);
         results.data.forEach((mail) => {
           if (validator.isEmail(mail["Email Address"])) {
             validEmail.push(mail["Email Address"]);
@@ -122,6 +124,23 @@ const GroupModal = ({ handleModal }) => {
               className='file-upload'
             />
           </div>
+
+          {file ? (
+            <div className='label-container'>
+              <div className='label-grp'>
+                <label className='lbl-count-valid'>{validEmails.length}</label>
+                <label className='lbl-title'>Valid</label>
+              </div>
+              <div className='label-grp'>
+                <label className='lbl-count-invalid'>
+                  {totalMails - validEmails.length}
+                </label>
+                <label className='lbl-title'>Invalid</label>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           {/* <div className='form-group'>
             <label htmlFor='text-input'>Text</label>
             <input
@@ -131,35 +150,37 @@ const GroupModal = ({ handleModal }) => {
               onChange={handleTextChange}
             />
           </div> */}
-          <button
-            type='button'
-            className='cancel-button'
-            onClick={() => handleModal(false)}
-          >
-            Cancel
-          </button>
-          <button
-            type='button'
-            className='submit-button'
-            onClick={handleSubmit}
-            disabled={!file && !name && isLoading}
-          >
-            {isLoading ? (
-              <div className='submit-loading'>
-                <Circles
-                  height='14'
-                  width='14'
-                  color='#fff'
-                  ariaLabel='circles-loading'
-                  wrapperStyle={{}}
-                  wrapperClass=''
-                  visible={true}
-                />
-              </div>
-            ) : (
-              "Submit"
-            )}
-          </button>
+          <div style={{ textAlign: "center" }}>
+            <button
+              type='button'
+              className='cancel-button'
+              onClick={() => handleModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type='button'
+              className='submit-button'
+              onClick={handleSubmit}
+              disabled={!file && !name && isLoading}
+            >
+              {isLoading ? (
+                <div className='submit-loading'>
+                  <Circles
+                    height='14'
+                    width='14'
+                    color='#fff'
+                    ariaLabel='circles-loading'
+                    wrapperStyle={{}}
+                    wrapperClass=''
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
         </form>
       </div>
       <ToastContainer

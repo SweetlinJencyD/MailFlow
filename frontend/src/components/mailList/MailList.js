@@ -23,8 +23,6 @@ function MailList({ data }) {
             <th>Subject</th>
             <th>Message</th>
             <th>Date</th>
-            <th>Time</th>
-            {/* <th>Actions</th> */}
           </tr>
         </thead>
         <tbody>
@@ -33,7 +31,7 @@ function MailList({ data }) {
               <td>{index + 1}</td>
               <td>{data.groupId.name}</td>
               <td>{data.subject}</td>
-              <td>Pending</td>
+              <td>{data.message}</td>
               <td>{date(data.createdAt)}</td>
             </tr>
           ))}

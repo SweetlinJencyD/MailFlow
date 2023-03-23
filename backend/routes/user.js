@@ -9,6 +9,7 @@ const {
   newTemplate,
   deleteTemplate,
   viewTemplates,
+  dashboard,
 } = require("../controllers/user");
 const { protect } = require("../middlewares/auth");
 
@@ -20,5 +21,6 @@ router.post("/deletetemplate/:id", deleteTemplate);
 router.get("/viewtemplates", protect, viewTemplates);
 router.get("/viewgroups", protect, viewGroups);
 router.get("/sentdetails", protect, sentDetails);
+router.get("/dashboard", protect, dashboard);
 
 module.exports = router;

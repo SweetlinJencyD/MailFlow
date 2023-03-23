@@ -35,40 +35,32 @@ function Sidebar() {
               </li>
 
               <li className='nav-link'>
-                <a href='#'>
-                  <Link to='/mailer'>
-                    {/* <i className='bx bx-bar-chart-alt-2 icon'></i> */}
-                    <i className='fa-sharp fa-solid fa-envelopes-bulk icon'></i>
-                    <span className='text nav-text'>Mailer</span>
-                  </Link>
-                </a>
+                <Link to='/mailer'>
+                  {/* <i className='bx bx-bar-chart-alt-2 icon'></i> */}
+                  <i className='fa-sharp fa-solid fa-envelopes-bulk icon'></i>
+                  <span className='text nav-text'>Mailer</span>
+                </Link>
               </li>
 
               <li className='nav-link'>
-                <a href='#'>
-                  <Link to='/groups'>
-                    <i className='fa-sharp fa-solid fa-user-group icon'></i>
-                    <span className='text nav-text'>Groups</span>
-                  </Link>
-                </a>
+                <Link to='/groups'>
+                  <i className='fa-sharp fa-solid fa-user-group icon'></i>
+                  <span className='text nav-text'>Groups</span>
+                </Link>
               </li>
 
               <li className='nav-link'>
-                <a href='#'>
-                  <Link to='/sentdetails'>
-                    <i class='fa-solid fa-inbox icon'></i>
-                    <span className='text nav-text'>Send Box</span>
-                  </Link>
-                </a>
+                <Link to='/sentdetails'>
+                  <i class='fa-sharp fa-solid fa-paper-plane icon'></i>
+                  <span className='text nav-text'>Sent</span>
+                </Link>
               </li>
 
               <li className='nav-link'>
-                <a href='#'>
-                  <Link to='/templates'>
-                    <i class='fa-solid fa-inbox icon'></i>
-                    <span className='text nav-text'>Templates</span>
-                  </Link>
-                </a>
+                <Link to='/templates'>
+                  <i class='fa-solid fa-table-columns icon'></i>
+                  <span className='text nav-text'>Templates</span>
+                </Link>
               </li>
 
               {/* <li className='nav-link'>

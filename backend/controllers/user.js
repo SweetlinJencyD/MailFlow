@@ -165,6 +165,19 @@ const viewTemplates = async (req, res) => {
   });
 };
 
+const dashboard = async (req, res) => {
+  const groups = await Group.find({ userId: req.user._id });
+  const templates = await Template.find({ userId: req.user._id });
+  const sents = await Sent.find({ userId: req.user._id });
+  res.status(200).send({
+    success: true,
+    message: "Successfully fetched the data",
+    groups: groups.length,
+    templates: templates.length,
+    sents: sents.length,
+  });
+};
+
 module.exports = {
   addGroup,
   sendMails,
@@ -176,4 +189,5 @@ module.exports = {
   newTemplate,
   deleteTemplate,
   viewTemplates,
+  dashboard,
 };
