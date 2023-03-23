@@ -3,7 +3,6 @@ const User = require("../Models/User");
 require("dotenv/config");
 
 const protect = async (req, res, next) => {
-  console.log(req);
   let token;
   if (
     req.headers.authorization &&

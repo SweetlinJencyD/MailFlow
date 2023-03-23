@@ -13,6 +13,7 @@ import PrivateRoute from "./auth/PrivateRoute";
 import SentDetails from "./pages/SentDetails";
 import NewTemplate from "./pages/NewTemp";
 import Logout from "./auth/Logout";
+import Templates from "./pages/Templates";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path='/groups' element={<Groups />} />
             <Route path='/sentdetails' element={<SentDetails />} />
             <Route path='/newtemplate' element={<NewTemplate />} />
+            <Route path='/templates' element={<Templates />} />
             <Route path='/logout' element={<Logout />} />
           </Route>
           <Route path='login' element={<LoginPage />} />

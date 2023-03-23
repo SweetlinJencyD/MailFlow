@@ -62,6 +62,15 @@ function Sidebar() {
                 </a>
               </li>
 
+              <li className='nav-link'>
+                <a href='#'>
+                  <Link to='/templates'>
+                    <i class='fa-solid fa-inbox icon'></i>
+                    <span className='text nav-text'>Templates</span>
+                  </Link>
+                </a>
+              </li>
+
               {/* <li className='nav-link'>
                 <a href='#'>
                   <i className='bx bx-wallet icon'></i>

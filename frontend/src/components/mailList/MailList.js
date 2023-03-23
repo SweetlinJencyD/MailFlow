@@ -2,6 +2,17 @@ import React from "react";
 import "./mailList.css";
 
 function MailList({ data }) {
+  const date = (d) => {
+    const dateString = d;
+    const date = new Date(dateString);
+
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+  };
+
   return (
     <div>
       <table class='fl-table'>
@@ -23,6 +34,7 @@ function MailList({ data }) {
               <td>{data.groupId.name}</td>
               <td>{data.subject}</td>
               <td>Pending</td>
+              <td>{date(data.createdAt)}</td>
             </tr>
           ))}
         </tbody>

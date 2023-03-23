@@ -1,6 +1,7 @@
 const Group = require("../Models/Group");
 const User = require("../Models/User");
 const Sent = require("../Models/Sent");
+const Template = require("../Models/Template");
 const bcrypt = require("bcrypt");
 const { sendMail } = require("../services/mail");
 const generateToken = require("../utils/generateToken");
@@ -35,14 +36,23 @@ const viewGroups = async (req, res) => {
 };
 
 const sendMails = async (req, res) => {
+  let temp = "none";
   const group = await Group.findById(req.body.group);
+  if (req.body.template !== "none") {
+    temp = await Template.findById(req.body.template);
+  } else {
+    temp = "none";
+  }
   if (!group)
     return res.status(404).send({ success: false, message: "Group not found" });
-  const send = await sendMail(group.emails, req.body.subject, req.body.message);
+  const msg = req.body.message ? req.body.message : " ";
+  const template = temp !== "none" ? temp.content : " ";
+  const send = await sendMail(group.emails, req.body.subject, msg, template);
   const sendBox = new Sent({
     userId: req.user._id,
     subject: req.body.subject,
     groupId: req.body.group,
+    message: req.body.template !== "none" ? temp.name : "Custom message",
   });
   const result = await sendBox.save();
   if (!result)
@@ -64,7 +74,6 @@ const deleteGroup = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  console.log(req.body);
   const user = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -112,6 +121,50 @@ const sentDetails = async (req, res) => {
   res.send({ success: true, message: "Successfully fetched the data", mails });
 };
 
+const newTemplate = async (req, res) => {
+  const template = new Template({
+    userId: req.user._id,
+    content: req.body.content,
+    name: req.body.name,
+  });
+  if (!template)
+    return res
+      .status(500)
+      .send({ success: false, message: "Failed creation of template" });
+  const result = await template.save();
+  if (!result)
+    return res
+      .status(500)
+      .send({ success: false, message: "Failed creation of template" });
+  res
+    .status(200)
+    .send({ success: true, message: "successfully added new template" });
+};
+
+const deleteTemplate = async (req, res) => {
+  const template = await Template.findByIdAndDelete(req.params.id);
+  if (!template)
+    return res
+      .status(404)
+      .send({ success: false, message: "Template not found!" });
+  res
+    .status(200)
+    .send({ success: true, message: "Template successfully deleted" });
+};
+
+const viewTemplates = async (req, res) => {
+  const templates = await Template.find({ userId: req.user._id });
+  if (!templates)
+    return res
+      .status(500)
+      .send({ success: false, message: "Cannot fetch the templates!" });
+  res.status(200).send({
+    success: true,
+    message: "Templates fetched successfully",
+    templates,
+  });
+};
+
 module.exports = {
   addGroup,
   sendMails,
@@ -120,4 +173,7 @@ module.exports = {
   register,
   login,
   sentDetails,
+  newTemplate,
+  deleteTemplate,
+  viewTemplates,
 };

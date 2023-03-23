@@ -1,6 +1,6 @@
 const sgMail = require("@sendgrid/mail");
 
-const sendMail = (mails, subject, message) => {
+const sendMail = (mails, subject, message, template) => {
   sgMail.setApiKey(process.env.Mail_Secret);
   const msg = {
     to: mails,
@@ -8,6 +8,11 @@ const sendMail = (mails, subject, message) => {
     subject: subject,
     text: message,
   };
+
+  if (template !== " ") {
+    msg.html = template;
+  }
+
   sgMail;
   sgMail
     .send(msg)

@@ -432,6 +432,7 @@ body.dark .home .text {
   max-width: 600px;
   margin: 0 auto;
   padding: 30px;
+  min-width: 500px;
 }
 
 .email-card__title {
@@ -648,4 +649,32 @@ body.dark .home .text {
   border: dotted;
   padding: 20px;
   margin-bottom: 10px;
+}
+
+.temp {
+  width: 50%;
+}
+
+.mailer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.template-option {
+  margin-right: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  .mailer-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .email-card {
+    min-width: 400px;
+  }
+
+  .template-option {
+    margin-top: 30px;
+  }
 }
