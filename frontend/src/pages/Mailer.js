@@ -31,6 +31,7 @@ function Send() {
   }, []);
 
   const handleSubmit = () => {
+    console.log("clicked!");
     const token = getToken();
     const config = {
       headers: { Authorization: token },
@@ -113,8 +114,8 @@ function Send() {
                     <button
                       type='button'
                       className='btn btn-primary'
-                      onClick={handleSubmit}
-                      disabled={subject !== "" && group !== ""}
+                      onClick={() => handleSubmit()}
+                      // disabled={subject !== "" && group !== ""}
                     >
                       Send <i className='fa-sharp fa-solid fa-paper-plane' />
                     </button>

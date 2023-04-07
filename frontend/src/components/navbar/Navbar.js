@@ -9,12 +9,12 @@ function Navbar() {
       <div class='user-profile'>
         <img src={require("../../assests/user.png")} alt='User profile' />
         <div class='user-dropdown'>
-          <Link to='#'>
+          {/* <Link to='#'>
             <div className='nav-items'>
               <i class='fa-sharp fa-solid fa-user' />
               Profile
             </div>
-          </Link>
+          </Link> */}
           <Link to='/logout'>
             <div className='nav-items'>
               <i class='fa-sharp fa-solid fa-right-from-bracket' />
