@@ -21,6 +21,6 @@ router.post("/deletetemplate/:id", deleteTemplate);
 router.get("/viewtemplates", protect, viewTemplates);
 router.get("/viewgroups", protect, viewGroups);
 router.get("/sentdetails", protect, sentDetails);
-router.get("/dashboard", protect, dashboard);
+router.get("/dashboard", protect, dashboard)
 
 module.exports = router;

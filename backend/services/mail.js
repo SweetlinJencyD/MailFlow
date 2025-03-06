@@ -4,7 +4,7 @@ const sendMail = (mails, subject, message, template) => {
   sgMail.setApiKey(process.env.Mail_Secret);
   const msg = {
     to: mails,
-    from: "vishnusatheeshdev@gmail.com",
+    from: "sweetlinjency1410@gmail.com",
     subject: subject,
     text: message,
   };
